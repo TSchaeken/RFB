@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Header from './Header';
 import Order from './Order';
 import Inventory from './Inventory';
@@ -12,11 +13,15 @@ class App extends React.Component {
     order: {}
   };
 
+  static propTypes = {
+    match: PropTypes.object
+  };
+
   componentDidMount = () => {
     const { params } = this.props.match;
     const localStorageRef = localStorage.getItem(params.storeId);
     if (localStorageRef) {
-      console.log('restoring!');
+      console.log(process.env.REACT_APP_API_KEY);
       console.log(JSON.parse(localStorageRef));
       this.setState({ order: JSON.parse(localStorageRef) });
     }
@@ -81,11 +86,20 @@ class App extends React.Component {
           <Header tagline="Tim is cool" />
           <ul className="fishes">
             {Object.keys(fishes).map(key => (
-              <Fish key={key} index={key} fish={fishes[key]} addToOrder={this.addToOrder} />
+              <Fish
+                key={key}
+                index={key}
+                fish={fishes[key]}
+                addToOrder={this.addToOrder}
+              />
             ))}
           </ul>
         </div>
-        <Order fishes={fishes} order={order} removeFromOrder={this.removeFromOrder} />
+        <Order
+          fishes={fishes}
+          order={order}
+          removeFromOrder={this.removeFromOrder}
+        />
         <Inventory
           addFish={this.addFish}
           updateFish={this.updateFish}

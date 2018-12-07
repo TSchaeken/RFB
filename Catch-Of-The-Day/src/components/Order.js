@@ -31,7 +31,6 @@ export class Order extends Component {
           <li key={key}>
             Sorry {fish ? fish.name : 'fish'} is no longer available
           </li>
-          ;
         </CSSTransition>
       );
     }
